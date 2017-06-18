@@ -19,7 +19,8 @@ def index():
   return render_template('index.html')
 
 if __name__ == '__main__':
-  app.run(port=33507)
+     #app.run(host='0.0.0.0') 
+    app.run(port=33507)
 
 tick = 'FB'
 api_url = 'https://www.quandl.com/api/v3/datatables/WIKI/PRICES.json?date.gte=20170501&date.lt=20170601&ticker=%s&api_key=TNvqvN5w-dbDua3bVNzk' %tick
@@ -34,11 +35,7 @@ df_important.columns = ['date','close','adjusted close','open','adjusted open']
 p = figure(plot_width = 500, plot_height = 500, title='Data from Quandle WIKI set', x_axis_label='date', x_axis_type='datetime')
 r = p.line(df_important['date'],df_important['close'], line_width = 1)
 script, div = components(plot)
-return render_template('graph.html', script=script, div=div)
+render_template('graph.html', script=script, div=div)
 
 
 
-<<<<<<< HEAD
-
-=======
->>>>>>> 50ba647e63762944a9103e7783fc6abf3c345511
