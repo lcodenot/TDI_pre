@@ -33,4 +33,7 @@ df_important.columns = ['date','close','adjusted close','open','adjusted open']
 p = figure(plot_width = 500, plot_height = 500)  
 r = p.multi_line([[1,2,3,4,5,8,9,10,11,12,15,16,17,18,19,22,23,24,25,26,30,31],[1,2,3,4,5,8,9,10,11,12,15,16,17,18,19,22,23,24,25,26,30,31],[1,2,3,4,5,8,9,10,11,12,15,16,17,18,19,22,23,24,25,26,30,31],[1,2,3,4,5,8,9,10,11,12,15,16,17,18,19,22,23,24,25,26,30,31]],[df_important['close'],df_important['open'],df_important['adjusted close'],df_important['adjusted open']], line_width = 1)
 t = show(p, notebook_handle = True)
+<<<<<<< HEAD
 
+=======
+>>>>>>> 50ba647e63762944a9103e7783fc6abf3c345511
