@@ -10,25 +10,18 @@ from bokeh.plotting import figure
 from bokeh.embed import components 
 output_notebook()
 
-response = raw_input("Insert Tick i.e. GOOG: ")
-yesno = [True,True,True,True]
+app = Flask(__name__)
 
+@app.route('/')
+def main():
+    return redirect('/index')
 
-def picture(tick, graphs):
-    api_url = 'https://www.quandl.com/api/v3/datatables/WIKI/PRICES.json?date.gte=20170501&date.lt=20170601&ticker=%s&api_key=TNvqvN5w-dbDua3bVNzk' %tick
+@app.route('/index')
+def index():
+    return render_template('index.html')
+    
+    
 
-    r = requests.get(api_url)
-    data = r.json()
-    df = pd.DataFrame(data['datatable']['data']) 
-
-    df_important= df[[1,5,12,2,9]]
-    df_important.columns = ['date','close','adjusted close','open','adjusted open']
-
-    df_important['date'] = df_important['date'].astype('datetime64[ns]')
-    p = figure(plot_width = 500, plot_height = 500, title='Data from Quandle WIKI set', x_axis_label='date', x_axis_type='datetime')
-    r = p.line(df_important['date'],df_important['close'], line_width = 1)
-    t = show(p, notebook_handle = True)
-    #script, div = components(p)
-    #return render_template('graph.html', script=script, div=div)
-
-picture(response, yesno)
+if __name__ == '__main__':
+     app.run(host='0.0.0.0') 
+    #app.run(port=33507)
