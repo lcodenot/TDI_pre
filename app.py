@@ -17,23 +17,31 @@ app = Flask(__name__)
 
 
 
-tick = 'FB'
-api_url = 'https://www.quandl.com/api/v3/datatables/WIKI/PRICES.json?date.gte=20170501&date.lt=20170601&ticker=%s&api_key=TNvqvN5w-dbDua3bVNzk' %tick
+def data(tick):
+  api_url = 'https://www.quandl.com/api/v3/datatables/WIKI/PRICES.json?date.gte=20170501&date.lt=20170601&ticker=%s&api_key=TNvqvN5w-dbDua3bVNzk' %tick
 
-r = requests.get(api_url)
-data = r.json()
-df = pd.DataFrame(data['datatable']['data']) 
+  r = requests.get(api_url)
+  data = r.json()
+  df = pd.DataFrame(data['datatable']['data']) 
 
-df_important= df[[1,5,12,2,9]]
-df_important.columns = ['date','close','adjusted close','open','adjusted open']
-df_important['date'] = df_important['date'].astype('datetime64[ns]')
+  df_important= df[[1,5,12,2,9]]
+  df_important.columns = ['date','close','adjusted close','open','adjusted open']
+  df_important['date'] = df_important['date'].astype('datetime64[ns]')
+  return df_important
 
-@app.route('/')
+@app.route('/', methods=['GET','POST'])
 def main():
-    return redirect('/plot')
+  return redirect('/index')
 
-@app.route('/plot')
-def plot():
+
+
+@app.route('/index', methods=['GET','POST'])
+def choice():
+  if request.method == 'GET':
+    return render_template('choice.html')
+  else: 
+    tick = request.form['tick']
+    df_important = data(tick)
     p = figure(plot_width = 500, plot_height = 500, title='Data from Quandle WIKI set', x_axis_label='date', x_axis_type='datetime')
     r = p.line(df_important['date'],df_important['close'], line_width = 1)
     script, div = components(p)
@@ -41,4 +49,4 @@ def plot():
 
 
 if __name__ == '__main__':
-    app.run(port=33507)
+  app.run(port=33507, debug = True)
