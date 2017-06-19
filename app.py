@@ -30,15 +30,15 @@ df_important['date'] = df_important['date'].astype('datetime64[ns]')
 
 @app.route('/')
 def main():
-  return redirect('/plot')
+    return redirect('/plot')
 
 @app.route('/plot')
 def plot():
-  p = figure(plot_width = 500, plot_height = 500, title='Data from Quandle WIKI set', x_axis_label='date', x_axis_type='datetime')
-  r = p.line(df_important['date'],df_important['close'], line_width = 1)
-  script, div = components(p)
-  return render_template('graph.html', script=script, div=div)
+    p = figure(plot_width = 500, plot_height = 500, title='Data from Quandle WIKI set', x_axis_label='date', x_axis_type='datetime')
+    r = p.line(df_important['date'],df_important['close'], line_width = 1)
+    script, div = components(p)
+    return render_template('graph.html', script=script, div=div)
 
 
 if __name__ == '__main__':
-  app.run(port=33507)
+    app.run(port=33507)
