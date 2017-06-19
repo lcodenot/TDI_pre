@@ -28,7 +28,7 @@ df_important= df[[1,5,12,2,9]]
 df_important.columns = ['date','close','adjusted close','open','adjusted open']
 df_important['date'] = df_important['date'].astype('datetime64[ns]')
 
-@app.route('/', methods=['GET','POST'])
+@app.route('/')
 def main():
   return redirect('/plot')
 
